@@ -266,7 +266,9 @@ namespace FirstPlugin
             Syroot.Maths.Vector4F[] vec4t0 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4b0 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4w0 = new Syroot.Maths.Vector4F[0];
+            Syroot.Maths.Vector4F[] vec4w1 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4i0 = new Syroot.Maths.Vector4F[0];
+            Syroot.Maths.Vector4F[] vec4i1 = new Syroot.Maths.Vector4F[0];
 
             //For shape morphing
             Syroot.Maths.Vector4F[] vec4Positions1 = new Syroot.Maths.Vector4F[0];
@@ -298,6 +300,10 @@ namespace FirstPlugin
                     vec4w0 = AttributeData(att, helper, "_w0");
                 if (att.Name == "_i0")
                     vec4i0 = AttributeData(att, helper, "_i0");
+                if (att.Name == "_w1")
+                    vec4w1 = AttributeData(att, helper, "_w1");
+                if (att.Name == "_i1")
+                    vec4i1 = AttributeData(att, helper, "_i1");
 
                 if (att.Name == "_p1")
                     vec4Positions1 = AttributeData(att, helper, "_p1");
@@ -326,19 +332,48 @@ namespace FirstPlugin
 
                 if (vec4w0.Length > 0)
                 {
-                    v.boneWeights.Add(vec4w0[i].X);
-                    v.boneWeights.Add(vec4w0[i].Y);
-                    v.boneWeights.Add(vec4w0[i].Z);
-                    v.boneWeights.Add(vec4w0[i].W);
+                    if (fshp.VertexSkinCount > 0)
+                        v.boneWeights.Add(vec4w0[i].X);
+                    if (fshp.VertexSkinCount > 1)
+                        v.boneWeights.Add(vec4w0[i].Y);
+                    if (fshp.VertexSkinCount > 2)
+                        v.boneWeights.Add(vec4w0[i].Z);
+                    if (fshp.VertexSkinCount > 3)
+                        v.boneWeights.Add(vec4w0[i].W);
+                }
+                if (vec4w1.Length > 0)
+                {
+                    if (fshp.VertexSkinCount > 4)
+                        v.boneWeights.Add(vec4w1[i].X);
+                    if (fshp.VertexSkinCount > 5)
+                        v.boneWeights.Add(vec4w1[i].Y);
+                    if (fshp.VertexSkinCount > 6)
+                        v.boneWeights.Add(vec4w1[i].Z);
+                    if (fshp.VertexSkinCount > 7)
+                        v.boneWeights.Add(vec4w1[i].W);
                 }
                 if (vec4i0.Length > 0)
                 {
-                    v.boneIds.Add((int)vec4i0[i].X);
-                    v.boneIds.Add((int)vec4i0[i].Y);
-                    v.boneIds.Add((int)vec4i0[i].Z);
-                    v.boneIds.Add((int)vec4i0[i].W);
+                    if (fshp.VertexSkinCount > 0)
+                        v.boneIds.Add((int)vec4i0[i].X);
+                    if (fshp.VertexSkinCount > 1)
+                        v.boneIds.Add((int)vec4i0[i].Y);
+                    if (fshp.VertexSkinCount > 2)
+                        v.boneIds.Add((int)vec4i0[i].Z);
+                    if (fshp.VertexSkinCount > 3)
+                        v.boneIds.Add((int)vec4i0[i].W);
                 }
-
+                if (vec4i1.Length > 0)
+                {
+                    if (fshp.VertexSkinCount > 4)
+                        v.boneIds.Add((int)vec4i1[i].X);
+                    if (fshp.VertexSkinCount > 5)
+                        v.boneIds.Add((int)vec4i1[i].Y);
+                    if (fshp.VertexSkinCount > 6)
+                        v.boneIds.Add((int)vec4i1[i].Z);
+                    if (fshp.VertexSkinCount > 7)
+                        v.boneIds.Add((int)vec4i1[i].W);
+                }
                 if (vec4t0.Length > 0)
                     v.tan = new Vector4(vec4t0[i].X, vec4t0[i].Y, vec4t0[i].Z, vec4t0[i].W);
                 if (vec4b0.Length > 0)

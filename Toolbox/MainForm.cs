@@ -188,8 +188,17 @@ namespace Toolbox
                 UpdateProgram.CommitList.Count > 0)
             {
                 updateToolstrip.Enabled = true;
+                UsePrompt = false;
+
+                // Shows an on-screen message that updates are available
+                DialogResult result = MessageBox.Show("Updates are available. Do you want to update now?", "Update Available", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    UpdateNotifcationClick();
+                }
             }
         }
+
 
         private void UpdateNotifcationClick()
         {
@@ -1598,6 +1607,20 @@ namespace Toolbox
                     failedFiles.Add($"{file} \n Error:\n {ex} \n");
                 }
             }
+        }
+
+        private void donateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WebUtil.OpenDonation();
+        }
+
+        private void openUserFolderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var userDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "SwitchToolbox");
+            if (!Directory.Exists(userDir))
+                Directory.CreateDirectory(userDir);
+
+            Process.Start("explorer.exe", userDir);
         }
     }
 }

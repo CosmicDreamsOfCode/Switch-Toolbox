@@ -588,6 +588,8 @@ namespace Bfres.Structs
                     if (ftexCont.ResourceNodes.ContainsKey(texref))
                         textures.Add((FTEX)ftexCont.ResourceNodes[texref]);
                 }
+                if (PluginRuntime.TextureCache.ContainsKey(texref))
+                    textures.Add(PluginRuntime.TextureCache[texref]);
             }
 
             return textures;
@@ -610,6 +612,7 @@ namespace Bfres.Structs
             Dictionary<string, List<FSHP.VertexAttribute>> AttributeMatcher = new Dictionary<string, List<FSHP.VertexAttribute>>();
 
             bool IsWiiU = (resFileU != null);
+            var boneMappings = Model != null ? Model.Skeleton.userIndices : new ushort[0];
 
             int MatStartIndex = materials.Count;
             string ext = System.IO.Path.GetExtension(FileName);
@@ -1365,6 +1368,9 @@ namespace Bfres.Structs
 
             if (IsEdited)
                 UpdateVertexData();
+
+            if (Model != null)
+                Model.Skeleton.userIndices = boneMappings;
         }
 
         public FMAT GetMaterial(int index)

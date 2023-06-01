@@ -162,8 +162,8 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -240,6 +240,16 @@
     <Compile Include="Compression\7ZIP\RangeCoder\RangeCoder.cs" />
     <Compile Include="Compression\7ZIP\RangeCoder\RangeCoderBit.cs" />
     <Compile Include="Compression\7ZIP\RangeCoder\RangeCoderBitTree.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Exceptions\InputTooLargeException.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Exceptions\NotEnoughDataException.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Exceptions\StreamTooShortException.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Exceptions\TooMuchInputException.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Formats\CompositeFormat.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Formats\CompressionFormat.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Formats\Nitro\LZ11.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Formats\Nitro\NitroCFormat.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Utils\IOUtils.cs" />
+    <Compile Include="Compression\LZ77_wii_11_compresss\Utils\LZUtil.cs" />
     <Compile Include="Compression\MarioTennisCmp32.cs" />
     <Compile Include="Compression\Oodle.cs" />
     <Compile Include="Compression\STLibraryCompression.cs" />
@@ -429,6 +439,7 @@
     <Compile Include="IO\Colors\STColor.cs" />
     <Compile Include="IO\Colors\STColor8.cs" />
     <Compile Include="IO\SubStream.cs" />
+    <Compile Include="Maths\STMath.cs" />
     <Compile Include="OpenGL\GLShaderGeneric.cs" />
     <Compile Include="OpenGL\IPickableObject.cs" />
     <Compile Include="OpenGL\OpenGL2DEnums.cs" />
@@ -862,7 +873,6 @@
     <Compile Include="IO\Extensions\StreamReaderExtensions.cs" />
     <Compile Include="IO\Extensions\StringExtension.cs" />
     <Compile Include="IO\STStream.cs" />
-    <Compile Include="Maths\Math.cs" />
     <Compile Include="Plugin\GenericPluginLoader.cs" />
     <Compile Include="Forms\Animation\AnimationPanel.cs">
       <SubType>UserControl</SubType>
@@ -955,6 +965,7 @@
     <Compile Include="Util\ImageUtilty.cs" />
     <Compile Include="Util\OpenGLUtils.cs" />
     <Compile Include="Util\Util.cs" />
+    <Compile Include="Util\WebUtil.cs" />
     <Compile Include="XML\XmlDoc.cs" />
   </ItemGroup>
   <ItemGroup>
