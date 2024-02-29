@@ -262,6 +262,7 @@ namespace FirstPlugin
             Syroot.Maths.Vector4F[] vec4uv0 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4uv1 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4uv2 = new Syroot.Maths.Vector4F[0];
+            Syroot.Maths.Vector4F[] vec4uv3 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4c0 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4t0 = new Syroot.Maths.Vector4F[0];
             Syroot.Maths.Vector4F[] vec4b0 = new Syroot.Maths.Vector4F[0];
@@ -290,6 +291,8 @@ namespace FirstPlugin
                     vec4uv1 = AttributeData(att, helper, "_u1");
                 if (att.Name == "_u2")
                     vec4uv2 = AttributeData(att, helper, "_u2");
+                if (att.Name == "_u3")
+                    vec4uv3 = AttributeData(att, helper, "_u3");
                 if (att.Name == "_c0")
                     vec4c0 = AttributeData(att, helper, "_c0");
                 if (att.Name == "_t0")
@@ -329,6 +332,8 @@ namespace FirstPlugin
                     v.uv1 = new Vector2(vec4uv1[i].X, vec4uv1[i].Y);
                 if (vec4uv2.Length > 0)
                     v.uv2 = new Vector2(vec4uv2[i].X, vec4uv2[i].Y);
+                if (vec4uv3.Length > 0)
+                    v.uv3 = new Vector2(vec4uv3[i].X, vec4uv3[i].Y);
 
                 if (vec4w0.Length > 0)
                 {

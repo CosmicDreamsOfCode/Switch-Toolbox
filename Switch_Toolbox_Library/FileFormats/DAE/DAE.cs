@@ -342,6 +342,9 @@ namespace Toolbox.Library
                     List<float> Color2 = new List<float>();
                     List<int[]> BoneIndices = new List<int[]>();
                     List<float[]> BoneWeights = new List<float[]>();
+                    List<float> Tangents = new List<float>();
+                    List<float> TangentSign = new List<float>();
+                    List<float> VertAlpha = new List<float>();
 
                     bool HasNormals = false;
                     bool HasColors = false;
@@ -349,7 +352,9 @@ namespace Toolbox.Library
                     bool HasUV0 = false;
                     bool HasUV1 = false;
                     bool HasUV2 = false;
+                    bool HasUV3 = false;
                     bool HasBoneIds = false;
+                    bool HasTangents = false;
 
                     foreach (var vertex in mesh.vertices)
                     {
@@ -359,26 +364,34 @@ namespace Toolbox.Library
                         if (vertex.uv0 != Vector2.Zero) HasUV0 = true;
                         if (vertex.uv1 != Vector2.Zero) HasUV1 = true;
                         if (vertex.uv2 != Vector2.Zero) HasUV2 = true;
+                        if (vertex.uv3 != Vector2.Zero) HasUV3 = true;
                         if (vertex.boneIds.Count > 0) HasBoneIds = true;
+                        if (vertex.tan != Vector4.Zero) HasTangents = true;
 
                         Position.Add(vertex.pos.X); Position.Add(vertex.pos.Y); Position.Add(vertex.pos.Z);
                         Normal.Add(vertex.nrm.X); Normal.Add(vertex.nrm.Y); Normal.Add(vertex.nrm.Z);
+
+                        Tangents.Add(vertex.tan.X); Tangents.Add(vertex.tan.Y); Tangents.Add(vertex.tan.Z); Tangents.Add(1);
+                        TangentSign.Add(vertex.tan.W); TangentSign.Add(vertex.tan.W); TangentSign.Add(vertex.tan.W); TangentSign.Add(1);
 
                         if (settings.FlipTexCoordsVertical)
                         {
                             UV0.Add(vertex.uv0.X); UV0.Add(1 - vertex.uv0.Y);
                             UV1.Add(vertex.uv1.X); UV1.Add(1 - vertex.uv1.Y);
                             UV2.Add(vertex.uv2.X); UV2.Add(1 - vertex.uv2.Y);
+                            UV3.Add(vertex.uv3.X); UV3.Add(1 - vertex.uv3.Y);
                         }
                         else
                         {
                             UV0.Add(vertex.uv0.X); UV0.Add(vertex.uv0.Y);
                             UV1.Add(vertex.uv1.X); UV1.Add(vertex.uv1.Y);
                             UV2.Add(vertex.uv2.X); UV2.Add(vertex.uv2.Y);
+                            UV3.Add(vertex.uv3.X); UV3.Add(vertex.uv3.Y);
                         }
 
                         Color.AddRange(new float[] { vertex.col.X, vertex.col.Y, vertex.col.Z, vertex.col.W });
                         Color2.AddRange(new float[] { vertex.col2.X, vertex.col2.Y, vertex.col2.Z, vertex.col2.W });
+                        VertAlpha.Add(vertex.col.W); VertAlpha.Add(vertex.col.W); VertAlpha.Add(vertex.col.W); VertAlpha.Add(1);
 
                         List<int> bIndices = new List<int>();
                         List<float> bWeights = new List<float>();
@@ -484,6 +497,8 @@ namespace Toolbox.Library
 
                     if (HasColors)
                         writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, Color.ToArray(), triangleLists.ToArray(), 0);
+                        //write alpha to another color so it doesnt get destroyed by the fbx converter lol
+                        writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, VertAlpha.ToArray(), triangleLists.ToArray(), 4);
 
                     if (HasColors2)
                         writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, Color2.ToArray(), triangleLists.ToArray(), 1);
@@ -497,8 +512,16 @@ namespace Toolbox.Library
                     if (HasUV2)
                         writer.WriteGeometrySource(mesh.Text, SemanticType.TEXCOORD, UV2.ToArray(), triangleLists.ToArray(), 2);
 
+                    if (HasUV3)
+                        writer.WriteGeometrySource(mesh.Text, SemanticType.TEXCOORD, UV3.ToArray(), triangleLists.ToArray(), 3);
+
                     if (HasBoneIds)
                         writer.AttachGeometryController(BoneIndices, BoneWeights);
+
+                    if (HasTangents)
+                        //write tangents as a color because why not, its easy and helps me
+                        writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, Tangents.ToArray(), triangleLists.ToArray(), 2);
+                        writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, TangentSign.ToArray(), triangleLists.ToArray(), 3);
 
                     writer.EndGeometryMesh();
                 }
