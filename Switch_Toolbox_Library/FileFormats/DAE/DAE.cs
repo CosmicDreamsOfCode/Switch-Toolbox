@@ -345,6 +345,7 @@ namespace Toolbox.Library
                     List<float> Tangents = new List<float>();
                     List<float> TangentSign = new List<float>();
                     List<float> VertAlpha = new List<float>();
+                    List<float> NormalColor = new List<float>();
 
                     bool HasNormals = false;
                     bool HasColors = false;
@@ -371,6 +372,7 @@ namespace Toolbox.Library
                         Position.Add(vertex.pos.X); Position.Add(vertex.pos.Y); Position.Add(vertex.pos.Z);
                         Normal.Add(vertex.nrm.X); Normal.Add(vertex.nrm.Y); Normal.Add(vertex.nrm.Z);
 
+                        NormalColor.Add(vertex.nrm.X); NormalColor.Add(vertex.nrm.Y); NormalColor.Add(vertex.nrm.Z); NormalColor.Add(1);
                         Tangents.Add(vertex.tan.X); Tangents.Add(vertex.tan.Y); Tangents.Add(vertex.tan.Z); Tangents.Add(1);
                         TangentSign.Add(vertex.tan.W); TangentSign.Add(vertex.tan.W); TangentSign.Add(vertex.tan.W); TangentSign.Add(1);
 
@@ -494,6 +496,7 @@ namespace Toolbox.Library
 
                     if (HasNormals)
                         writer.WriteGeometrySource(mesh.Text, SemanticType.NORMAL, Normal.ToArray(), triangleLists.ToArray());
+                        writer.WriteGeometrySource("Normal", SemanticType.COLOR, NormalColor.ToArray(), triangleLists.ToArray(), 4);
 
                     if (HasColors)
                         writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, Color.ToArray(), triangleLists.ToArray(), 0);
@@ -520,8 +523,8 @@ namespace Toolbox.Library
 
                     if (HasTangents)
                         //write tangents as a color because why not, its easy and helps me
-                        writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, Tangents.ToArray(), triangleLists.ToArray(), 2);
-                        writer.WriteGeometrySource(mesh.Text, SemanticType.COLOR, TangentSign.ToArray(), triangleLists.ToArray(), 3);
+                        writer.WriteGeometrySource("Tangent", SemanticType.COLOR, Tangents.ToArray(), triangleLists.ToArray(), 2);
+                        writer.WriteGeometrySource("TangentSign", SemanticType.COLOR, TangentSign.ToArray(), triangleLists.ToArray(), 3);
 
                     writer.EndGeometryMesh();
                 }
